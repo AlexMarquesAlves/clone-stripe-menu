@@ -1,1 +1,1 @@
-export {} from "./";
+export { DropdownOption } from "./Option";

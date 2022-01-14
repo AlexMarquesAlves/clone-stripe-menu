@@ -10,4 +10,18 @@ export const Container = styled.nav`
   }
 `;
 
-export const DropdownStyles = styled.div``;
+export const DropdownStyles = styled.div`
+  .dropdown-option {
+    padding: 20px 25px;
+    outline: 0;
+    color: #fff;
+    font-size: 18px;
+
+    transition: opacity: .2s;
+
+    &:hover,
+    &:focus{
+      opacity: 0.55;
+    }
+  }
+`;
