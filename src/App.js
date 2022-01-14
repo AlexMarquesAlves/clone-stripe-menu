@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Layout>
-        {/* <NavBar /> */}
+        <NavBar />
         <h1>Hello World</h1>
       </Layout>
       <GlobalStyles />

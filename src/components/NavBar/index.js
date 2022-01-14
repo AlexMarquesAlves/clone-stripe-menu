@@ -5,7 +5,7 @@ import { Container } from "./styles";
 function NavBar() {
   return (
     <Container>
-      {/* <ul>
+      <ul>
         <li>
           <DropdownOption name="Produtos" content={<h1>Produtos</h1>} />
         </li>
@@ -18,7 +18,7 @@ function NavBar() {
         <li>
           <DropdownOption name="Empresa" content={<h1>Empresa</h1>} />
         </li>
-      </ul> */}
+      </ul>
     </Container>
   );
 }
