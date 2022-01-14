@@ -7,8 +7,10 @@ export default createGlobalStyle`
       box-sizing: border-box;
    }
    html{
+      font-size: 62.5%;
       min-height: 100%;
       background: #202020;
+      scroll-behavior: smooth;
    }
    *,button,input{
       border: 0;
