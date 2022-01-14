@@ -6,8 +6,7 @@ export default createGlobalStyle`
       padding: 0;
       box-sizing: border-box;
    }
-   html{
-      font-size: 62.5%;
+   html{      
       min-height: 100%;
       background: #202020;
       scroll-behavior: smooth;
