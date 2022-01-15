@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 
@@ -64,8 +63,26 @@ export function DropdownOption({ name, content: Content, backgroundHeight }) {
     backgroundHeight,
   ]);
 
+  const handleOpen = () => setTargetId(id);
+  const handleClose = () => setTargetId(id);
+  const handleTouch = () => (window.inMobile = true);
+  const handleClick = (event) => {
+    event.preventDefault();
+
+    return targetId === id ? handleClose() : handleOpen;
+  };
+
   return (
-    <motion.button className="dropdown-option" ref={optionHook}>
+    <motion.button
+      className="dropdown-option"
+      ref={optionHook}
+      onMouseDown={handleClick}
+      onHoverStart={() => !window.isMobile && handleOpen()}
+      onHoverEnd={() => !window.isMobile && handleClose()}
+      onTouchStart={handleTouch}
+      onFocus={handleOpen}
+      onBlur={handleClose}
+    >
       {name}
     </motion.button>
   );
