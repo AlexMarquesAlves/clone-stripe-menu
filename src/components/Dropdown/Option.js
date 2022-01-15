@@ -2,7 +2,7 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 
-import { useDimension } from "./Dimensions";
+import { useDimensions } from "./Dimensions";
 import { Context } from "./Provider";
 
 let lastOptionId = 0;
@@ -11,7 +11,7 @@ export function DropdownOption({ name, content: Content, backgroundHeight }) {
   const idRef = useRef(++lastOptionId);
   const id = idRef.current;
 
-  const [optionHook, optionDimensions] = useDimension();
+  const [optionHook, optionDimensions] = useDimensions();
   const [registered, setRegistered] = useState(false);
 
   const {
@@ -30,7 +30,7 @@ export function DropdownOption({ name, content: Content, backgroundHeight }) {
         useEffect(() => {
           const contentDimensions = contentRef.current.getBoundingClientRect();
           updateOptionProps(id, { contentDimensions });
-        });
+        }, []);
 
         return (
           <div ref={contentRef}>
@@ -42,7 +42,7 @@ export function DropdownOption({ name, content: Content, backgroundHeight }) {
       registerOption({
         id,
         optionDimensions,
-        optionCenterX: optionDimensions.x + optionDimensions / 2,
+        optionCenterX: optionDimensions.x + optionDimensions.width / 2,
         WrappedContent,
         backgroundHeight,
       });
@@ -51,7 +51,7 @@ export function DropdownOption({ name, content: Content, backgroundHeight }) {
     } else if (registered && optionDimensions) {
       updateOptionProps(id, {
         optionDimensions,
-        optionCenterX: optionDimensions.x + optionDimensions / 2,
+        optionCenterX: optionDimensions.x + optionDimensions.width / 2,
       });
     }
   }, [
