@@ -60,5 +60,21 @@ export function DropdownProvider({ children }) {
     if (targetId !== null) setCachedId(targetId);
   }, [targetId]);
 
-  return <Context.Provider value={{}}>{children}</Context.Provider>;
+  return (
+    <Context.Provider
+      value={{
+        registerOption,
+        updateOptionProp,
+        getOptionById,
+        deleteOptionById,
+        options,
+        targetId,
+        setTargetId,
+        cachedId,
+        setCachedId,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
 }
