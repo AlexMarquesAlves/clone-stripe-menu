@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Root() {
-  return <div></div>;
+export function DropdownRoot() {
+  return <div />;
 }
