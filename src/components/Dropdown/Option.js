@@ -1,10 +1,72 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useRef, useState, useContext, useEffect } from "react";
+import { motion } from "framer-motion";
 
-export function DropdownOption({ name, content: Content }) {
+import { useDimension } from "./Dimensions";
+import { Context } from "./Provider";
+
+let lastOptionId = 0;
+
+export function DropdownOption({ name, content: Content, backgroundHeight }) {
+  const idRef = useRef(++lastOptionId);
+  const id = idRef.current;
+
+  const [optionHook, optionDimensions] = useDimension();
+  const [registered, setRegistered] = useState(false);
+
+  const {
+    registerOption,
+    updateOptionProps,
+    deleteOptionById,
+    setTargetId,
+    targetId,
+  } = useContext(Context);
+
+  useEffect(() => {
+    if (!registered && optionDimensions) {
+      const WrappedContent = () => {
+        const contentRef = useRef();
+
+        useEffect(() => {
+          const contentDimensions = contentRef.current.getBoundingClientRect();
+          updateOptionProps(id, { contentDimensions });
+        });
+
+        return (
+          <div ref={contentRef}>
+            <Content />
+          </div>
+        );
+      };
+
+      registerOption({
+        id,
+        optionDimensions,
+        optionCenterX: optionDimensions.x + optionDimensions / 2,
+        WrappedContent,
+        backgroundHeight,
+      });
+
+      setRegistered(true);
+    } else if (registered && optionDimensions) {
+      updateOptionProps(id, {
+        optionDimensions,
+        optionCenterX: optionDimensions.x + optionDimensions / 2,
+      });
+    }
+  }, [
+    registerOption,
+    id,
+    registered,
+    optionDimensions,
+    updateOptionProps,
+    deleteOptionById,
+    backgroundHeight,
+  ]);
+
   return (
-    <>
-      <button className="dropdown-option">{name}</button>
-      {/* <Content></Content> */}
-    </>
+    <motion.button className="dropdown-option" ref={optionHook}>
+      {name}
+    </motion.button>
   );
 }
