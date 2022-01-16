@@ -9,7 +9,7 @@ function App() {
     <>
       <Layout>
         <NavBar />
-        <h1 style={{ color: "#fff" }}>Hello World</h1>
+        <h1 className="h1-content">Here goes the content</h1>
       </Layout>
       <GlobalStyles />
     </>

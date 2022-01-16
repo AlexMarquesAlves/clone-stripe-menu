@@ -20,4 +20,11 @@ export default createGlobalStyle`
       list-style: none;
       padding-left: 0;
    }
+
+   .h1-content{
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+      margin: 19% 0;
+   }
 `;
