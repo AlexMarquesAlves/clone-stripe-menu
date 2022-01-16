@@ -76,7 +76,7 @@ export function DropdownRoot() {
 }
 
 function DropdownArrow({ isFirstInteraction }) {
-  const { cachedId, cachedOption, getOptionById } = useContext(Context);
+  const { cachedId, getOptionById } = useContext(Context);
 
   const cachedOption = useMemo(
     () => getOptionById(cachedId),
