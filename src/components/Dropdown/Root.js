@@ -1,11 +1,13 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 
 import { Context } from "./Provider";
 import { DropdownSection } from "./Section";
 
+const refDuration = 0.22;
+
 export function DropdownRoot() {
-  const { options, cachedId, getOptionById } = useContext(Context);
+  const { options, cachedId, getOptionById, targetId } = useContext(Context);
 
   const cachedOption = useMemo(
     () => getOptionById(cachedId),
@@ -22,6 +24,19 @@ export function DropdownRoot() {
     x = optionCenterX - width / 2;
   }
 
+  const [hovering, setHovering] = useState(false);
+
+  const isActive = targetId !== null || hovering;
+
+  const [hasInteracted, setHasInteracted] = useState(false);
+  const isFirstInteraction = isActive && !hasInteracted;
+
+  if (isFirstInteraction) {
+    setTimeout(() => {
+      if (!hasInteracted) setHasInteracted(true);
+    }, 15);
+  }
+
   return (
     <div className="dropdown-root">
       <motion.div
@@ -30,11 +45,24 @@ export function DropdownRoot() {
           x,
           width,
           height,
+          pointerEvents: isActive ? "unset" : "none",
         }}
+        transition={{
+          ease: "easeOut",
+          x: isFirstInteraction ? { duration: 0 } : refDuration,
+          width: { duration: isFirstInteraction ? 0 : refDuration * 0.93 },
+          height: { duration: isFirstInteraction ? 0 : refDuration * 0.93 },
+          pointerEvents: { delay: 0.05 },
+        }}
+        onHoverStart={() => setHovering(true)}
+        onHoverEnd={() => setHovering(false)}
       >
         <motion.div
           animate={{
             x: -x,
+          }}
+          transition={{
+            x: isFirstInteraction ? { duration: 0 } : undefined,
           }}
         >
           {options.map((item) => (
@@ -42,6 +70,36 @@ export function DropdownRoot() {
           ))}
         </motion.div>
       </motion.div>
+      <DropdownArrow isFirstInteraction={isFirstInteraction} />
     </div>
+  );
+}
+
+function DropdownArrow({ isFirstInteraction }) {
+  const { cachedId, cachedOption, getOptionById } = useContext(Context);
+
+  const cachedOption = useMemo(
+    () => getOptionById(cachedId),
+    [cachedId, getOptionById]
+  );
+
+  const x = cachedOption ? cachedOption.optionCenterX : 0;
+
+  return (
+    <motion.div
+      className="dropdown-arrow"
+      initial={{
+        opacity: 0,
+      }}
+      animate={{
+        x,
+        pointerEvents: "none",
+        opacity: x > 0 ? 1 : 0,
+      }}
+      transition={{
+        ease: "easeOut",
+        x: { duration: isFirstInteraction ? 0 : refDuration },
+      }}
+    />
   );
 }
