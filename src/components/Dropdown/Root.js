@@ -82,6 +82,8 @@ export function DropdownRoot() {
           onHoverStart={() => setHovering(true)}
           onHoverEnd={() => setHovering(false)}
         >
+          <DropdownBackground />
+
           <motion.div
             animate={{
               x: -x,
@@ -126,6 +128,30 @@ function DropdownArrow({ isFirstInteraction }) {
       transition={{
         ease: "easeOut",
         x: { duration: isFirstInteraction ? 0 : refDuration },
+      }}
+    />
+  );
+}
+
+export function DropdownBackground() {
+  const { cachedId, getOptionById } = useContext(Context);
+
+  const cachedOption = useMemo(
+    () => getOptionById(cachedId),
+    [cachedId, getOptionById]
+  );
+
+  const backgroundHeight = cachedOption?.backgroundHeight || 0;
+
+  return (
+    <motion.div
+      className="dropdown-background"
+      animate={{
+        height: backgroundHeight,
+      }}
+      transition={{
+        ease: "easeOut",
+        duration: refDuration,
       }}
     />
   );
