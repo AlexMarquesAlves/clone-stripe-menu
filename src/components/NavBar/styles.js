@@ -43,7 +43,7 @@ export const DropdownStyles = styled.div`
       top: -6.5px;
       left: -8px;
       border-radius: 4px 0 0 0;
-      
+
       transform: rotate(45deg);
     }
   }
@@ -61,4 +61,10 @@ export const DropdownStyles = styled.div`
     position: absolute;
   }
   
+  .dropdown-background {
+    position: absolute;
+    bottom: 0;
+    background: #f6f9fc;
+    width: 100%;
+  }
 `;
