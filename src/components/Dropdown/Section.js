@@ -6,9 +6,9 @@ import { Context } from "./Provider";
 export function DropdownSection({ option }) {
   const { updateOptionProps, cachedId } = useContext(Context);
 
-  const { id, optionDimensions, optionCenterX, contentDimentios } = option;
+  const { id, optionDimensions, optionCenterX, contentDimensions } = option;
 
-  const contentWidth = contentDimentios?.width || 0;
+  const contentWidth = contentDimensions?.width || 0;
   const x = optionCenterX - contentWidth / 2;
 
   const isActive = cachedId === id;
